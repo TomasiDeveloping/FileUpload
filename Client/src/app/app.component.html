@@ -1,0 +1,48 @@
+<article class="container container-fluid">
+  <section *ngIf="isCreate" class="create">
+    <h1>Create User</h1>
+    <form>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input [(ngModel)]="name" class="form-control" id="name" name="name" placeholder="Enter your name" type="text">
+      </div>
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input [(ngModel)]="address" class="form-control" id="address" name="address" placeholder="Enter your address"
+               type="text">
+      </div>
+      <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+      <div class="row">
+        <div class="offset-md-5 col-md-2">
+          <button (click)="onCreate()" [disabled]="!response || response.dbPath.length <= 0" class="btn btn-primary"
+                  type="button">Create
+          </button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <section *ngIf="!isCreate" class="users">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Image</th>
+        <th scope="col">Name</th>
+        <th scope="col">Address</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <td><img [src]="createImgPath(user.imgPath)" alt="profile picture" style="width:60px; height:60px;"></td>
+        <td>{{user.name}}</td>
+        <td>{{user.address}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="row">
+      <div class="offset-md-10 col-md-2">
+        <button (click)="returnToCreate()" class="btn btn-primary" type="button">New User</button>
+      </div>
+    </div>
+  </section>
+</article>
